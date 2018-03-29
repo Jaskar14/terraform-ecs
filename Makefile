@@ -1,7 +1,7 @@
 AWS_PROFILE = personal-aws-account
 AWS_REGION := $(shell aws configure get region --profile $(AWS_PROFILE))
-ELASTICSEARCH_REPO = 950172495016.dkr.ecr.us-east-1.amazonaws.com/elasticsearch
-KIBANA_REPO	= 950172495016.dkr.ecr.us-east-1.amazonaws.com/kibana
+ELASTICSEARCH_REPO = 950172495016.dkr.ecr.us-east-1.amazonaws.com
+KIBANA_REPO	= 950172495016.dkr.ecr.us-east-1.amazonaws.com
 
 
 
@@ -29,8 +29,8 @@ terraform-destroy :
 deploy :
 	# bin/es-deploy.sh
 	docker build -t elastic-search -f ./provision/docker/elasticsearch/Dockerfile .
-	docker tag elastic-search $(ELASTICSEARCH_REPO)/elastic-search
-	docker push $(ELASTICSEARCH_REPO)/elastic-search
+	docker tag elastic-search $(ELASTICSEARCH_REPO)/elasticsearch
+	docker push $(ELASTICSEARCH_REPO)/elasticsearch
 	docker build -t kibana -f ./provision/docker/kibana/Dockerfile .
 	docker tag kibana $(KIBANA_REPO)/kibana
 	docker push $(KIBANA_REPO)/kibana
@@ -40,6 +40,14 @@ deploy :
 create-repositories:
 	aws ecr create-repository --repository-name elasticsearch --profile $(AWS_PROFILE)
 	aws ecr create-repository --repository-name kibana --profile $(AWS_PROFILE)
+
+.PHONY: get-login
+get-login:
+	$(aws ecr get-login  --no-include-email  --region $(AWS_REGION) --profile $(AWS_PROFILE))
+
+.PHONE: test 
+test:	
+	echo ()
 
 # .PHONY: configure
 # configure:
