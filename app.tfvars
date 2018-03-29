@@ -1,10 +1,10 @@
 app = "terraform-ecs"
 
-aws_profile = ""
+aws_profile = "personal-aws-account"
 
 aws_region = "us-east-1"
 
-aws_key_pair = "foo"
+aws_key_pair = "test-ec2-keypair"
 
 ssh_ips = ["174.125.104.63/32"]
 

@@ -14,10 +14,12 @@ variable "ecs_cluster_id" {
 variable "app_images" {
   description = "The Docker image to run in the ECS Task (e.g. foo/bar)."
   type        = "list"
+  # default     = ["elasticsearch:6.2.2"]
 }
 
 variable "repositories" {
   type = "list"
+  # default = ["elasticsearch"]
 }
 
 variable "app_ports" {

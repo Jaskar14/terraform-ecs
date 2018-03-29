@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+
+  elasticsearch:
+    container_name: seclock-es
+    image: 950172495016.dkr.ecr.us-east-1.amazonaws.com/elasticsearch:latest
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx1g -Xms1g"
+    networks:
+      - seclock-dev
+
+  kibana:
+    container_name: seclock-kibana
+    image: 950172495016.dkr.ecr.us-east-1.amazonaws.com/kibana:latest
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - seclock-dev
+
+networks:
+    seclock-dev:
+      driver: bridge
