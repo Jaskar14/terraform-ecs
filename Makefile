@@ -27,7 +27,7 @@ deploy :
 	docker build -t kibana -f ./provision/docker/kibana/Dockerfile .
 	docker tag kibana $(KIBANA_REPO)/kibana
 	docker push $(KIBANA_REPO)/kibana
-	ecs-cli compose --file ./provision/docker/docker-compose.yml --verbose up
+	ecs-cli compose --file ./provision/docker/docker-compose.yml --cluster terraform-ecs-cluster --region us-east-1 up --launch-type EC2 --verbose
 
 .PHONY: create-repositories
 create-repositories:
